@@ -1,1 +1,26 @@
+name: Create Client
+
+on:
+  workflow_dispatch:  # Permite ejecución manual
+  issues:
+    types: [opened]  # Se ejecuta cuando se crea un issue
+
+jobs:
+  create-client:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Install Dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run Client Creation Script
+        run: python manage_clients.py --create "${{ github.event.issue.title }}"
+
 
